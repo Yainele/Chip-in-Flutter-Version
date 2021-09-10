@@ -2,15 +2,46 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class NewEventPage extends StatefulWidget {
-  const NewEventPage({Key? key}) : super(key: key);
 
+class ContactListTileWidget extends StatelessWidget {
+  final Contact contact;
+  final bool isSelected;
+  final ValueChanged<Contact> onSelectedContact;
+  const ContactListTileWidget({Key? key,
+    required this.contact,
+    required this.isSelected,
+    required this.onSelectedContact}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(child: ListTile(
+      onTap: () => onSelectedContact(contact),
+      title: Text((contact.displayName).toString()),
+      trailing:
+      isSelected ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26) : null,
+      subtitle: Text(
+          (contact.phones!.elementAt(0).value).toString()
+      ),
+      leading: (contact.avatar != null && contact.avatar!.length > 0)
+          ? CircleAvatar(
+        //Исправить ошибку с загрузкой пользовательского аватара
+        //Ошибка: The argument type 'Uint8List?' can't be assigned to the parameter type 'Uint8List'
+        //backgroundImage: MemoryImage((contact.avatar)),
+      ) : CircleAvatar(child: Text(contact.initials()),),
+    ));
+  }
+}
+class NewEventPage extends StatefulWidget {
+  final bool isMultiSelection;
+  const NewEventPage({Key? key,
+     this.isMultiSelection=true}) : super(key: key);
   @override
   _NewEventPageState createState() => _NewEventPageState();
 }
 class _NewEventPageState extends State<NewEventPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
+  List<Contact> selectedContacts = [];
   TextEditingController searchController = new TextEditingController();
   @override
   void initState() {
@@ -75,18 +106,12 @@ class _NewEventPageState extends State<NewEventPage> {
                   itemCount: isSearching == true ? contactsFiltered.length : contacts.length,
                   itemBuilder: (context , index) {
                    Contact contact = isSearching == true ? contactsFiltered[index] : contacts[index];
-                    return Card(child: ListTile(
-                        title: Text((contact.displayName).toString()),
-                        subtitle: Text(
-                            (contact.phones!.elementAt(0).value).toString()
-                        ),
-                        leading: (contact.avatar != null && contact.avatar!.length > 0)
-                            ? CircleAvatar(
-                          //Исправить ошибку с загрузкой пользовательского аватара
-                          //Ошибка: The argument type 'Uint8List?' can't be assigned to the parameter type 'Uint8List'
-                          //backgroundImage: MemoryImage((contact.avatar)),
-                        ) : CircleAvatar(child: Text(contact.initials()),)
-                    ));
+                   final isSelected = selectedContacts.contains(contact);
+                   return ContactListTileWidget(
+                       contact: contact,
+                       isSelected: isSelected,
+                       onSelectedContact: selectContact,
+                   );
                   },
                 )
             )
@@ -95,5 +120,13 @@ class _NewEventPageState extends State<NewEventPage> {
       ),
     );
   }
+  void selectContact(Contact contact){
+    if(widget.isMultiSelection){
+      final isSelected = selectedContacts.contains(contact);
+      setState(() =>
+        isSelected
+            ? selectedContacts.remove(contact)
+            : selectedContacts.add(contact));
+    }
+  }
 }
-
