@@ -12,6 +12,7 @@ class ContactListTileWidget extends StatelessWidget {
     required this.isSelected,
     required this.onSelectedContact}) : super(key: key);
 
+  get avatar => contact.avatar;
   @override
   Widget build(BuildContext context) {
     return Card(child: ListTile(
@@ -24,9 +25,7 @@ class ContactListTileWidget extends StatelessWidget {
       ),
       leading: (contact.avatar != null && contact.avatar!.length > 0)
           ? CircleAvatar(
-        //Исправить ошибку с загрузкой пользовательского аватара
-        //Ошибка: The argument type 'Uint8List?' can't be assigned to the parameter type 'Uint8List'
-        //backgroundImage: MemoryImage((contact.avatar)),
+        backgroundImage: MemoryImage((avatar)),
       ) : CircleAvatar(child: Text(contact.initials()),),
     ));
   }
@@ -57,6 +56,7 @@ class _NewEventPageState extends State<NewEventPage> {
       contacts = _contacts;
     });
   }
+
   filterContacts(){
     List<Contact> _contacts = [];
     _contacts.addAll(contacts);
@@ -100,8 +100,8 @@ class _NewEventPageState extends State<NewEventPage> {
               ),
             ),
             Expanded(
-                child:
-                ListView.builder(
+                child: contacts != null
+                ? ListView.builder(
                   shrinkWrap: true,
                   itemCount: isSearching == true ? contactsFiltered.length : contacts.length,
                   itemBuilder: (context , index) {
@@ -113,6 +113,9 @@ class _NewEventPageState extends State<NewEventPage> {
                        onSelectedContact: selectContact,
                    );
                   },
+                )
+                    : Center(
+                  child: CircularProgressIndicator(),
                 )
             )
           ],
