@@ -1,4 +1,4 @@
-import 'package:chip_in_flutter_version/Screens/Home%20Page.dart';
+import 'package:chip_in_flutter_version/Screens/home/Home%20Page.dart';
 import 'package:chip_in_flutter_version/Screens/Profile%20Page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class ChipIn extends StatelessWidget {
 }
 
 class MyBottomNavigationBar extends StatefulWidget {
-  const MyBottomNavigationBar({Key? key}) : super(key: key);
+  const MyBottomNavigationBar({Key key}) : super(key: key);
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }

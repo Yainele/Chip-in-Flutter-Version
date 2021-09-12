@@ -7,10 +7,10 @@ class ContactListTileWidget extends StatelessWidget {
   final Contact contact;
   final bool isSelected;
   final ValueChanged<Contact> onSelectedContact;
-  const ContactListTileWidget({Key? key,
-    required this.contact,
-    required this.isSelected,
-    required this.onSelectedContact}) : super(key: key);
+  const ContactListTileWidget({Key key,
+    this.contact,
+    this.isSelected,
+    this.onSelectedContact}) : super(key: key);
 
   get avatar => contact.avatar;
   @override
@@ -21,9 +21,9 @@ class ContactListTileWidget extends StatelessWidget {
       trailing:
       isSelected ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26) : null,
       subtitle: Text(
-          (contact.phones!.elementAt(0).value).toString()
+          (contact.phones.elementAt(0).value).toString()
       ),
-      leading: (contact.avatar != null && contact.avatar!.length > 0)
+      leading: (contact.avatar != null && contact.avatar.length > 0)
           ? CircleAvatar(
         backgroundImage: MemoryImage((avatar)),
       ) : CircleAvatar(child: Text(contact.initials()),),
@@ -32,7 +32,7 @@ class ContactListTileWidget extends StatelessWidget {
 }
 class NewEventPage extends StatefulWidget {
   final bool isMultiSelection;
-  const NewEventPage({Key? key,
+  const NewEventPage({Key key,
      this.isMultiSelection=true}) : super(key: key);
   @override
   _NewEventPageState createState() => _NewEventPageState();

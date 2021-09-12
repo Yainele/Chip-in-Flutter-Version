@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "290795174255",
+    "project_id": "chip-inv",
+    "storage_bucket": "chip-inv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290795174255:android:c7b1ab544cbd66f28ed09a",
+        "android_client_info": {
+          "package_name": "com.example.chip_in_flutter_version"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290795174255-7h789t91k2g57dhbtgjhe3m4ag0l1luu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chip_in_flutter_version",
+            "certificate_hash": "c763577cd26153e09448a8c48693aaecdae41e5e"
+          }
+        },
+        {
+          "client_id": "290795174255-vd4nqak3lv119ldvrv9ibl1f8hj0hsd8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVh99z3PGiTuylgrYcp8_RaJIOG-gLIz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290795174255-vd4nqak3lv119ldvrv9ibl1f8hj0hsd8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
