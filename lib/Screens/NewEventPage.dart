@@ -100,8 +100,8 @@ class _NewEventPageState extends State<NewEventPage> {
               ),
             ),
             Expanded(
-                child: contacts != null
-                ? ListView.builder(
+                child: contacts.isNotEmpty
+                ?  ListView.builder(
                   shrinkWrap: true,
                   itemCount: isSearching == true ? contactsFiltered.length : contacts.length,
                   itemBuilder: (context , index) {
@@ -115,7 +115,7 @@ class _NewEventPageState extends State<NewEventPage> {
                   },
                 )
                     : Center(
-                  child: CircularProgressIndicator(),
+                  child: CupertinoActivityIndicator(),
                 )
             )
           ],
