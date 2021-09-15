@@ -9,6 +9,6 @@ class Member {
   num Credit;
   String PhoneNumber;
 
-  Member({this.Id,this.Credit,this.Name,this.PhoneNumber});
+  Member({required this.Id,required this.Credit,required this.Name,required this.PhoneNumber});
   
 }

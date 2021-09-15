@@ -1,4 +1,3 @@
-
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,36 +6,43 @@ class ContactListTileWidget extends StatelessWidget {
   final Contact contact;
   final bool isSelected;
   final ValueChanged<Contact> onSelectedContact;
-  const ContactListTileWidget({Key key,
-    this.contact,
-    this.isSelected,
-    this.onSelectedContact}) : super(key: key);
+  const ContactListTileWidget(
+      {Key? key,
+      required this.contact,
+      required this.isSelected,
+      required this.onSelectedContact})
+      : super(key: key);
 
   get avatar => contact.avatar;
   @override
   Widget build(BuildContext context) {
-    return Card(child: ListTile(
+    return Card(
+        child: ListTile(
       onTap: () => onSelectedContact(contact),
       title: Text((contact.displayName).toString()),
-      trailing:
-      isSelected ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26) : null,
-      subtitle: Text(
-          (contact.phones.elementAt(0).value).toString()
-      ),
-      leading: (contact.avatar != null && contact.avatar.length > 0)
+      trailing: isSelected
+          ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
+          : null,
+      //subtitle: Text((contact.phones!.elementAt(0).value).toString()),
+      leading: (contact.avatar != null && contact.avatar?.length != 0)
           ? CircleAvatar(
-        backgroundImage: MemoryImage((avatar)),
-      ) : CircleAvatar(child: Text(contact.initials()),),
+              backgroundImage: MemoryImage((avatar)),
+            )
+          : CircleAvatar(
+              child: Text(contact.initials()),
+            ),
     ));
   }
 }
+
 class NewEventPage extends StatefulWidget {
   final bool isMultiSelection;
-  const NewEventPage({Key key,
-     this.isMultiSelection=true}) : super(key: key);
+  const NewEventPage({Key? key, this.isMultiSelection = true})
+      : super(key: key);
   @override
   _NewEventPageState createState() => _NewEventPageState();
 }
+
 class _NewEventPageState extends State<NewEventPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
@@ -50,6 +56,7 @@ class _NewEventPageState extends State<NewEventPage> {
       filterContacts();
     });
   }
+
   getAllContacts() async {
     List<Contact> _contacts = (await ContactsService.getContacts()).toList();
     setState(() {
@@ -57,21 +64,22 @@ class _NewEventPageState extends State<NewEventPage> {
     });
   }
 
-  filterContacts(){
+  filterContacts() {
     List<Contact> _contacts = [];
     _contacts.addAll(contacts);
-    if(searchController.text.isNotEmpty){
+    if (searchController.text.isNotEmpty) {
       //Доделать поиск по телефонному номеру
-        _contacts.retainWhere((contact) {
-          String searchTerm = searchController.text.toLowerCase();
-          String contactName = contact.displayName.toString().toLowerCase();
-          return contactName.contains(searchTerm);
-        });
-        setState(() {
-          contactsFiltered = _contacts;
-        });
+      _contacts.retainWhere((contact) {
+        String searchTerm = searchController.text.toLowerCase();
+        String contactName = contact.displayName.toString().toLowerCase();
+        return contactName.contains(searchTerm);
+      });
+      setState(() {
+        contactsFiltered = _contacts;
+      });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     bool isSearching = searchController.text.isNotEmpty;
@@ -80,56 +88,54 @@ class _NewEventPageState extends State<NewEventPage> {
         title: Text('Запись'),
       ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(10.0,20.0,10.0,0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
         child: Column(
           children: <Widget>[
             Container(
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  labelText: 'Поиск',
-                      border: new OutlineInputBorder(
+                    labelText: 'Поиск',
+                    border: new OutlineInputBorder(
                         borderSide: new BorderSide(
-                          color: Theme.of(context).primaryColor
-                        )
-                      ),
-                  prefixIcon: Icon(
-                    Icons.search
-                  )
-                ),
+                            color: Theme.of(context).primaryColor)),
+                    prefixIcon: Icon(Icons.search)),
               ),
             ),
             Expanded(
                 child: contacts.isNotEmpty
-                ?  ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: isSearching == true ? contactsFiltered.length : contacts.length,
-                  itemBuilder: (context , index) {
-                   Contact contact = isSearching == true ? contactsFiltered[index] : contacts[index];
-                   final isSelected = selectedContacts.contains(contact);
-                   return ContactListTileWidget(
-                       contact: contact,
-                       isSelected: isSelected,
-                       onSelectedContact: selectContact,
-                   );
-                  },
-                )
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: isSearching == true
+                            ? contactsFiltered.length
+                            : contacts.length,
+                        itemBuilder: (context, index) {
+                          Contact contact = isSearching == true
+                              ? contactsFiltered[index]
+                              : contacts[index];
+                          final isSelected = selectedContacts.contains(contact);
+                          return ContactListTileWidget(
+                            contact: contact,
+                            isSelected: isSelected,
+                            onSelectedContact: selectContact,
+                          );
+                        },
+                      )
                     : Center(
-                  child: CupertinoActivityIndicator(),
-                )
-            )
+                        child: CupertinoActivityIndicator(),
+                      ))
           ],
         ),
       ),
     );
   }
-  void selectContact(Contact contact){
-    if(widget.isMultiSelection){
+
+  void selectContact(Contact contact) {
+    if (widget.isMultiSelection) {
       final isSelected = selectedContacts.contains(contact);
-      setState(() =>
-        isSelected
-            ? selectedContacts.remove(contact)
-            : selectedContacts.add(contact));
+      setState(() => isSelected
+          ? selectedContacts.remove(contact)
+          : selectedContacts.add(contact));
     }
   }
 }

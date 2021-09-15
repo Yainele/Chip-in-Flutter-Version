@@ -1,3 +1,4 @@
+import 'package:chip_in_flutter_version/Screens/auth/authentification.dart';
 import 'package:chip_in_flutter_version/Screens/home/Home%20Page.dart';
 import 'package:chip_in_flutter_version/Screens/Profile%20Page.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +17,13 @@ class ChipIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: MyBottomNavigationBar(),
+      home: Authentification(),
     );
   }
 }
 
 class MyBottomNavigationBar extends StatefulWidget {
-  const MyBottomNavigationBar({Key key}) : super(key: key);
+  const MyBottomNavigationBar({Key ?key}) : super(key: key);
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
