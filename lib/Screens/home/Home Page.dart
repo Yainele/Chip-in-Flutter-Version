@@ -15,7 +15,7 @@ ListView _EventListView(){
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: Icon(Icons.weekend),
+              leading: Icon(Icons.account_circle,size: 40,),
               title: Text("Name creater Event"),
               subtitle: Text("Date of event"),
             ),
@@ -41,12 +41,28 @@ ListView _EventListView(){
                 ),
               ],
             ),
+            const Divider(
+              thickness: 2,
+            ),
             ButtonBar(
               alignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.alarm)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.account_box)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.west_outlined)),
+                IconButton(
+                    iconSize: 25,
+                    color: Theme.of(context).unselectedWidgetColor,
+                    onPressed: () {}, icon: Icon(Icons.bookmark)
+
+                ),
+                IconButton(
+                    iconSize: 25,
+                    color: Theme.of(context).unselectedWidgetColor,
+                    onPressed: () {}, icon: Icon(Icons.notifications)
+                ),
+                IconButton(
+                    iconSize: 25,
+                    color: Theme.of(context).unselectedWidgetColor,
+                    onPressed: () {}, icon: Icon(Icons.reply)
+                ),
               ],
             ),
           ],
