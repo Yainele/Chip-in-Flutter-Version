@@ -2,7 +2,7 @@ import 'package:chip_in_flutter_version/Screens/home/Home%20Page.dart';
 import 'package:chip_in_flutter_version/Screens/Profile%20Page.dart';
 import 'package:flutter/material.dart';
 
-import 'Screens/NewEventPage.dart';
+import 'Screens/Event/NewEventPage.dart';
 
 void main() {
   runApp
@@ -17,6 +17,7 @@ class ChipIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: MyBottomNavigationBar(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

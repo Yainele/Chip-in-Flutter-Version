@@ -1,4 +1,7 @@
 
+import 'dart:io';
+
+import 'package:chip_in_flutter_version/Screens/Event/CreateEvent.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +44,7 @@ class _NewEventPageState extends State<NewEventPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
   List<Contact> selectedContacts = [];
+  bool fabVisibility = false;
   TextEditingController searchController = new TextEditingController();
   @override
   void initState() {
@@ -49,6 +53,21 @@ class _NewEventPageState extends State<NewEventPage> {
     searchController.addListener(() {
       filterContacts();
     });
+  }
+   void isVisible(){
+    List<Contact> _selectedContacts = [];
+    _selectedContacts.addAll(selectedContacts);
+    if(selectedContacts.isNotEmpty){
+      setState(() {
+        fabVisibility = true;
+      });
+    }
+    else
+    {
+      setState(() {
+        fabVisibility = false;
+      });
+    }
   }
   getAllContacts() async {
     List<Contact> _contacts = (await ContactsService.getContacts()).toList();
@@ -75,9 +94,27 @@ class _NewEventPageState extends State<NewEventPage> {
   @override
   Widget build(BuildContext context) {
     bool isSearching = searchController.text.isNotEmpty;
+    isVisible();
     return Scaffold(
       appBar: AppBar(
         title: Text('Запись'),
+        actions: [
+          Visibility(
+            visible: fabVisibility,
+              child:  IconButton(
+                  icon: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                    size: 26,
+              ),
+                      onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CreateEvent(selectedContacts : selectedContacts)
+                  ));
+          },
+          ),
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.fromLTRB(10.0,20.0,10.0,0.0),
@@ -116,20 +153,21 @@ class _NewEventPageState extends State<NewEventPage> {
                 )
                     : Center(
                   child: CupertinoActivityIndicator(),
-                )
+                ),
             )
           ],
         ),
       ),
     );
   }
-  void selectContact(Contact contact){
-    if(widget.isMultiSelection){
+  void selectContact(Contact contact) {
+    if (widget.isMultiSelection) {
       final isSelected = selectedContacts.contains(contact);
       setState(() =>
-        isSelected
-            ? selectedContacts.remove(contact)
-            : selectedContacts.add(contact));
+      isSelected
+          ? selectedContacts.remove(contact)
+          : selectedContacts.add(contact));
     }
   }
+
 }
