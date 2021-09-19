@@ -1,8 +1,8 @@
 class User_profile {
   String _id;
-  String _name;
+  String? _name;
   String _email;
-  String _photoUri;
+  String? _photoUri;
 
   User_profile(
     this._id,
@@ -19,9 +19,9 @@ class User_profile {
     _id = id;
   }
 
-  String get name => _name;
+  String? get name => _name;
 
-  set name(String name) {
+  set name(String? name) {
     _name = name;
   }
   
@@ -31,9 +31,9 @@ class User_profile {
     _email = email;
   }
 
-  String get photoUri => _photoUri;
+  String? get photoUri => _photoUri;
 
-  set photoUri(String photoUri) {
+  set photoUri(String? photoUri) {
     _photoUri = photoUri;
   }
 

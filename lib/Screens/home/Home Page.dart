@@ -47,18 +47,18 @@ ListView _EventListView(){
             ButtonBar(
               alignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
+                IconButton(//пометить как важное
                     iconSize: 25,
                     color: Theme.of(context).unselectedWidgetColor,
                     onPressed: () {}, icon: Icon(Icons.bookmark)
 
                 ),
-                IconButton(
+                IconButton(//уведомить всех
                     iconSize: 25,
                     color: Theme.of(context).unselectedWidgetColor,
                     onPressed: () {}, icon: Icon(Icons.notifications)
                 ),
-                IconButton(
+                IconButton(//поделиться
                     iconSize: 25,
                     color: Theme.of(context).unselectedWidgetColor,
                     onPressed: () {}, icon: Icon(Icons.reply)

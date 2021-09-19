@@ -1,7 +1,7 @@
 import 'package:chip_in_flutter_version/Screens/Event/NewEventPage.dart';
 import 'package:chip_in_flutter_version/Screens/auth/authentification.dart';
 import 'package:chip_in_flutter_version/Screens/home/Home%20Page.dart';
-import 'package:chip_in_flutter_version/Screens/Profile%20Page.dart';
+import 'package:chip_in_flutter_version/Screens/profile/Profile%20Page.dart';
 import 'package:flutter/material.dart';
 
 

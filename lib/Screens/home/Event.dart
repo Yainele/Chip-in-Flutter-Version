@@ -14,7 +14,7 @@ class Event  {
   num FullAmount;
   int MemberNumber;
   String HexColor;
-  List<Member>Members;
+  List<Member>?Members;
 
   Event(
   this.Name, 
@@ -32,7 +32,15 @@ class Event  {
   }
   void setFullAmountAuto(){
     num amount = 0;
-    Members.forEach((element) { amount+element.Credit;});
+    Members!.forEach((element) { amount+element.Credit;});
+  }
+  void setAmountForAll(){//устанавливает для всех одинаковую сумму долга
+    
+    double Amount = 0.0;
+    Amount = FullAmount/Members!.length;
+    for (var member in Members! ){
+      member.Credit = Amount;
+    }
   }
 }
 class EventProvider with ChangeNotifier{
@@ -40,6 +48,7 @@ class EventProvider with ChangeNotifier{
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Stream collectionStream = FirebaseFirestore.instance.collection('users').snapshots();
   Stream documentStream = FirebaseFirestore.instance.collection('users').doc('ABC123').snapshots();
+  
   
 
     
