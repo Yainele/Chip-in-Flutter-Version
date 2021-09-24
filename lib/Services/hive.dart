@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 
 class HiveService{
   isExists({String? boxName}) async {
-    final openBox = await Hive.openBox(boxName);
+    final openBox = await Hive.openBox(boxName!);
     int length = openBox.length;
     return length != 0;
   }
@@ -21,7 +21,7 @@ class HiveService{
   getListBoxes<T>(String? boxName) async {
     List<T>?boxList = [];
 
-    final openBox = await Hive.openBox(boxName);
+    final openBox = await Hive.openBox(boxName!);
 
     int length = openBox.length;
 

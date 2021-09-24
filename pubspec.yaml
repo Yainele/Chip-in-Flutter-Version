@@ -37,8 +37,13 @@ dependencies:
   firebase_auth: ^3.1.1
   google_sign_in: ^5.1.0
   #библиотека для кэширования
-  hive: ^1.4.1+1
-  hive_flutter: ^0.3.0+2
+  hive: ^2.0.4
+ # hive_flutter: ^0.3.0+2
+  #библиотеку для шэринга
+  wc_flutter_share: ^0.4.0
+  #аутентификация apple
+  sign_in_with_apple: ^3.0.0
+  crypto: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
