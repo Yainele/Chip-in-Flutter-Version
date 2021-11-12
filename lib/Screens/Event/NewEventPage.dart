@@ -28,11 +28,11 @@ class ContactListTileWidget extends StatelessWidget {
     return Card(
         child: ListTile(
       onTap: () => onSelectedContact(contact),
-      title: Text((contact.displayName).toString()),
+      title: Text((contact.displayName ?? '').toString()),
       trailing: isSelected
           ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
           : null,
-      //subtitle: Text((contact.phones!.elementAt(0).value).toString()),
+      subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
       leading: (contact.avatar != null && contact.avatar?.length != 0)
           ? CircleAvatar(
               backgroundImage: MemoryImage((avatar)),
