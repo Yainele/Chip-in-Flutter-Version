@@ -1,11 +1,14 @@
 
 
-import 'package:chip_in_flutter_version/Screens/home/Member.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:convert';
 
-class Event  {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:chip_in_flutter_version/Screens/home/Member.dart';
+
+class Event {
   
   final String Name;
   String Id;
@@ -17,14 +20,14 @@ class Event  {
   List<Member>?Members;
 
   Event(
-  this.Name, 
-  this.Id, 
-  this.Deadline,
-  this.CreditorName,
-  this.FullAmount,
-  this.MemberNumber, 
-  this.HexColor,
-  this.Members);
+    this.Name,
+    this.Id,
+    this.Deadline,
+    this.CreditorName,
+    this.FullAmount,
+    this.MemberNumber,
+    this.HexColor,
+  );
   
   void setId(){
     Id="1";
@@ -42,13 +45,52 @@ class Event  {
       member.Credit = Amount;
     }
   }
+
+
+  Map<String, dynamic> toMap() {
+    return {
+      'Name': Name,
+      'Id': Id,
+      'Deadline': Deadline,
+      'CreditorName': CreditorName,
+      'FullAmount': FullAmount,
+      'MemberNumber': MemberNumber,
+      'HexColor': HexColor,
+    };
+  }
+
+  Event fromMap(Map<String, dynamic> map) {
+    return Event(
+      map['Name'],
+      map['Id'],
+      map['Deadline'],
+      map['CreditorName'],
+      map['FullAmount'],
+      map['MemberNumber'],
+      map['HexColor'],
+    );
+  }
+
+ 
 }
 class EventProvider with ChangeNotifier{
   //здесь будут операции с базой данных
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Stream collectionStream = FirebaseFirestore.instance.collection('users').snapshots();
-  Stream documentStream = FirebaseFirestore.instance.collection('users').doc('ABC123').snapshots();
-  
+
+  getDataFromFirebase(){
+    FirebaseFirestore userID = FirebaseFirestore.instance;
+    List<Event>? Events = [];
+    
+    FirebaseFirestore.instance
+    .collection(userID.toString())
+    .get()
+    .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+            print(doc["first_name"]);
+            
+        });
+    });
+
+  }
   
 
     

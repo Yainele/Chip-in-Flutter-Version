@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 ListView _EventListView(){
   return ListView.builder(
@@ -18,6 +19,7 @@ ListView _EventListView(){
               leading: Icon(Icons.account_circle,size: 40,),
               title: Text("Name creater Event"),
               subtitle: Text("Date of event"),
+              onTap: () => print("ListTile is work"),
             ),
             Padding(
               padding: EdgeInsets.all(5.0),
@@ -61,7 +63,9 @@ ListView _EventListView(){
                 IconButton(//поделиться
                     iconSize: 25,
                     color: Theme.of(context).unselectedWidgetColor,
-                    onPressed: () {}, icon: Icon(Icons.reply)
+                    onPressed: () {
+                      Share.share("список должников"+" скоро будет больше");
+                    }, icon: Icon(Icons.reply)
                 ),
               ],
             ),
