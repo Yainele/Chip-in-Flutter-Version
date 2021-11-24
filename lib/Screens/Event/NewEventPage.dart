@@ -28,11 +28,13 @@ class ContactListTileWidget extends StatelessWidget {
     return Card(
         child: ListTile(
       onTap: () => onSelectedContact(contact),
-      title: Text((contact.displayName).toString()),
+      title: Text((contact.displayName ?? '').toString()),
       trailing: isSelected
           ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
           : null,
-      //subtitle: Text((contact.phones!.elementAt(0).value).toString()),
+      subtitle: 
+       Text(contact.phones?.elementAt(0).value ?? ''),
+        
       leading: (contact.avatar != null && contact.avatar?.length != 0)
           ? CircleAvatar(
               backgroundImage: MemoryImage((avatar)),
@@ -85,7 +87,13 @@ class _NewEventPageState extends State<NewEventPage> {
   }
 
   getAllContacts() async {
-    List<Contact> _contacts = (await ContactsService.getContacts()).toList();
+    List<Contact> ContactsFromUserPhone = (await ContactsService.getContacts()).toList();
+    List<Contact> _contacts = [];
+    for (Contact contact in ContactsFromUserPhone){
+        if (contact.phones != null && contact.phones?.length != 0){
+          _contacts.add(contact);
+        }
+    }
     setState(() {
       contacts = _contacts;
     });

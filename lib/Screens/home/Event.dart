@@ -10,24 +10,16 @@ import 'package:chip_in_flutter_version/Screens/home/Member.dart';
 
 class Event {
   
-  final String Name;
-  String Id;
-  String Deadline;
-  String CreditorName;
-  num FullAmount;
-  int MemberNumber;
-  String HexColor;
+  String? Name;
+  String? Id;
+  String? Deadline;
+  String? CreditorName;
+  num? FullAmount;
+  int? MemberNumber;
+  String? HexColor;
   List<Member>?Members;
 
-  Event(
-    this.Name,
-    this.Id,
-    this.Deadline,
-    this.CreditorName,
-    this.FullAmount,
-    this.MemberNumber,
-    this.HexColor,
-  );
+  
   
   void setId(){
     Id="1";
@@ -59,17 +51,8 @@ class Event {
     };
   }
 
-  Event fromMap(Map<String, dynamic> map) {
-    return Event(
-      map['Name'],
-      map['Id'],
-      map['Deadline'],
-      map['CreditorName'],
-      map['FullAmount'],
-      map['MemberNumber'],
-      map['HexColor'],
-    );
-  }
+ 
+ 
 
  
 }
