@@ -11,38 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class ContactListTileWidget extends StatelessWidget {
-  final Contact contact;
-  final bool isSelected;
-  final ValueChanged<Contact> onSelectedContact;
-  const ContactListTileWidget(
-      {Key? key,
-      required this.contact,
-      required this.isSelected,
-      required this.onSelectedContact})
-      : super(key: key);
 
-  get avatar => contact.avatar;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: ListTile(
-      onTap: () => onSelectedContact(contact),
-      title: Text((contact.displayName ?? '').toString()),
-      trailing: isSelected
-          ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
-          : null,
-      subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
-      leading: (contact.avatar != null && contact.avatar?.length != 0)
-          ? CircleAvatar(
-              backgroundImage: MemoryImage((avatar)),
-            )
-          : CircleAvatar(
-              child: Text(contact.initials()),
-            ),
-    ));
-  }
-}
+
 
 class NewEventPage extends StatefulWidget {
   final bool isMultiSelection;
@@ -182,5 +152,37 @@ class _NewEventPageState extends State<NewEventPage> {
           ? selectedContacts.remove(contact)
           : selectedContacts.add(contact));
     }
+  }
+}
+class ContactListTileWidget extends StatelessWidget {
+  final Contact contact;
+  final bool isSelected;
+  final ValueChanged<Contact> onSelectedContact;
+  const ContactListTileWidget(
+      {Key? key,
+        required this.contact,
+        required this.isSelected,
+        required this.onSelectedContact})
+      : super(key: key);
+
+  get avatar => contact.avatar;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: ListTile(
+          onTap: () => onSelectedContact(contact),
+          title: Text((contact.displayName ?? '').toString()),
+          trailing: isSelected
+              ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
+              : null,
+          subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+          leading: (contact.avatar != null && contact.avatar?.length != 0)
+              ? CircleAvatar(
+            backgroundImage: MemoryImage((avatar)),
+          )
+              : CircleAvatar(
+            child: Text(contact.initials()),
+          ),
+        ));
   }
 }

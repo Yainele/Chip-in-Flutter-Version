@@ -2,19 +2,31 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+
+
+
+
+
+
 class CreateEvent extends StatefulWidget {
   Contact? contact;
+  bool isMultiSelection=true;
   List<Contact>? _selectedContacts = [];
-
   CreateEvent(
     List<Contact>? _selectedContacts,
   ) : _selectedContacts = _selectedContacts;
+
+
   
   @override
   _CreateEventState createState() => _CreateEventState(_selectedContacts!);
 }
 
 class _CreateEventState extends State<CreateEvent> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+   bool isMultiSelection=true;
+   List<Contact> selectedContactsSMS = [];
   TextEditingController searchController = new TextEditingController();
   List<Contact> contactsFiltered = [];
   List<Contact> selectedContacts = [];
@@ -47,6 +59,7 @@ class _CreateEventState extends State<CreateEvent> {
     bool isSearching = searchController.text.isNotEmpty;
     double CreditValue = 0.0;
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Событие"),
         actions: [
@@ -130,6 +143,7 @@ class _CreateEventState extends State<CreateEvent> {
               thickness: 2,
               color: Colors.blue,
             ),
+            //Три кнопки внизу экрана
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 25),
               child: Row(
@@ -140,15 +154,7 @@ class _CreateEventState extends State<CreateEvent> {
                  width: 60,
                  child: OutlinedButton(
                    onPressed: () {
-                     showModalBottomSheet(context: context,
-                         builder: (context) => buildSheet(context
-                         ),
-                       shape: RoundedRectangleBorder(
-                         borderRadius: BorderRadius.circular(20),
-                         side: BorderSide(
-                           color: Colors.blue.withOpacity(1.0),
-                           width: 1,),)
-                     );
+                     showBottomSheet(context);
                    },
                    child: Center(
                      child: Icon(Icons.mail, color: Colors.black),
@@ -192,9 +198,76 @@ class _CreateEventState extends State<CreateEvent> {
       ),
     );
   }
+  showBottomSheet(context){
+    return showModalBottomSheet(
+        context: context,
+        builder: (builder){
+          return StatefulBuilder(builder: (context,setstate){
+            return Container(
+              child: Column(),
+            );
+            }
+          );
+        },
+        shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20),
+    side: BorderSide(
+    color: Colors.blue.withOpacity(1.0),
+    width: 1,),)
+    );
+  }
   //Выплывающее окно для смсок
   Widget buildSheet(BuildContext context) => Container(
     padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
+
     child: Container(
-          ),);
+      child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: selectedContacts.length,
+              itemBuilder: (context, index)
+              {
+                Contact contact = selectedContacts[index];
+                final isSelected =
+                selectedContactsSMS.contains(contact);
+                return ContactListTileWidget(
+                    contact: contact,
+                    isSelected: isSelected,
+                    onSelectedContact: selectContact
+                );
+              }
+          ),
+    ),
+  );
+  void selectContact(Contact contact) {
+    if (widget.isMultiSelection) {
+      final isSelected = selectedContactsSMS.contains(contact);
+      setState(() => isSelected
+          ? selectedContactsSMS.remove(contact)
+          : selectedContactsSMS.add(contact));
+    }
   }
+}
+
+class ContactListTileWidget extends StatelessWidget {
+  final Contact contact;
+  final bool isSelected;
+  final ValueChanged<Contact> onSelectedContact;
+  const ContactListTileWidget(
+      {Key? key,
+        required this.contact,
+        required this.isSelected,
+        required this.onSelectedContact})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: ListTile(
+          onTap: () => onSelectedContact(contact),
+          title: Text((contact.displayName ?? '').toString()),
+          trailing: isSelected
+              ? Icon(Icons.mail_outline, color: Theme.of(context).primaryColor, size: 26)
+              : null,
+          subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+        ));
+  }
+}
