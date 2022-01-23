@@ -44,6 +44,10 @@ dependencies:
   #аутентификация apple
   sign_in_with_apple: ^3.0.0
   crypto: ^3.0.1
+  #генарация уникальных id
+  uuid: ^3.0.5
+  #http Запросы
+  http: ^0.13.4
 
 
   # The following adds the Cupertino Icons font to your application.

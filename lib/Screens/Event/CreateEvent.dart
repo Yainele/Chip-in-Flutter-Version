@@ -1,8 +1,12 @@
 
+import 'package:chip_in_flutter_version/Screens/home/Event.dart';
+import 'package:chip_in_flutter_version/Screens/home/Member.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -66,7 +70,7 @@ class _CreateEventState extends State<CreateEvent> {
           Visibility(
               child: IconButton(
                 icon: Icon(
-                  Icons.save,
+                  Icons.save,//сохранение события в дб
                   color: Colors.white,
                   size: 26,
                 ),
@@ -152,7 +156,7 @@ class _CreateEventState extends State<CreateEvent> {
                SizedBox(
                  height: 65,
                  width: 60,
-                 child: OutlinedButton(
+                 child: OutlinedButton(//кнопка разделить на всех
                    onPressed: () {
                     showBottomSheet(context); 
                    },
@@ -164,7 +168,7 @@ class _CreateEventState extends State<CreateEvent> {
                   SizedBox(
                     height: 65,
                     width: 60,
-                    child: OutlinedButton(
+                    child: OutlinedButton(//кнопка поделиться
                       onPressed: () {  },
                       child: Center(
                         child:
@@ -276,6 +280,25 @@ class _CreateEventState extends State<CreateEvent> {
           ? selectedContactsSMS.remove(contact)
           : selectedContactsSMS.add(contact));
     }
+  }
+  Future<void> SaveEvent(List<Contact>selectedContacts, String Name, String Deadline) async {
+
+    String Id;
+    String CreditorName;
+    num FullAmount;
+    int MemberNumber = selectedContacts.length;
+    List<Member>?Members;
+
+    var uuid = Uuid();
+    Id = uuid.v1();
+
+
+         await http.post(
+  Uri.parse("https://localhost:44309/api/Events/"),
+  body: {
+    
+  });
+    
   }
 }
 

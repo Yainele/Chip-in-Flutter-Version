@@ -4,6 +4,7 @@ import 'package:chip_in_flutter_version/Screens/home/Member.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:uuid/uuid.dart';
 
 class Event  {
   
@@ -13,21 +14,20 @@ class Event  {
   String CreditorName;
   num FullAmount;
   int MemberNumber;
-  String HexColor;
   List<Member>?Members;
 
   Event(
   this.Name, 
-  this.Id, 
+  this.Id,
   this.Deadline,
   this.CreditorName,
   this.FullAmount,
   this.MemberNumber, 
-  this.HexColor,
   this.Members);
   
   void setId(){
-    Id="1";
+    var uuid = Uuid();
+    Id = uuid.v1();
     //установить id по дате
   }
   void setFullAmountAuto(){
