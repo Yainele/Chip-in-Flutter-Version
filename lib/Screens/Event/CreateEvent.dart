@@ -116,7 +116,7 @@ class _CreateEventState extends State<CreateEvent> {
                         children: [
                           ListTile(
                             title: Text(contact.displayName ?? ''),
-                            subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+                            //subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
                             leading: (contact.avatar != null && contact.avatar?.length != 0 )
                                 ? CircleAvatar(
                               backgroundImage: MemoryImage(contact.avatar!),
@@ -154,7 +154,17 @@ class _CreateEventState extends State<CreateEvent> {
                  width: 60,
                  child: OutlinedButton(
                    onPressed: () {
-                     showBottomSheet(context);
+                     showModalBottomSheet(
+                       context: context,
+                        builder: (context) {
+                          return Column(
+                            children: [
+                              buildSheet(context)
+
+                            ],
+                          );
+                        },
+                     ); 
                    },
                    child: Center(
                      child: Icon(Icons.mail, color: Colors.black),
@@ -267,7 +277,7 @@ class ContactListTileWidget extends StatelessWidget {
           trailing: isSelected
               ? Icon(Icons.mail_outline, color: Theme.of(context).primaryColor, size: 26)
               : null,
-          subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+          //subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
         ));
   }
 }

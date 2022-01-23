@@ -156,6 +156,7 @@ class _NewEventPageState extends State<NewEventPage> {
 }
 class ContactListTileWidget extends StatelessWidget {
   final Contact contact;
+  final bool isEmpty = false;
   final bool isSelected;
   final ValueChanged<Contact> onSelectedContact;
   const ContactListTileWidget(
@@ -175,7 +176,7 @@ class ContactListTileWidget extends StatelessWidget {
           trailing: isSelected
               ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
               : null,
-          subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+          //subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
           leading: (contact.avatar != null && contact.avatar?.length != 0)
               ? CircleAvatar(
             backgroundImage: MemoryImage((avatar)),
