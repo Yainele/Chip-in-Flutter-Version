@@ -154,17 +154,7 @@ class _CreateEventState extends State<CreateEvent> {
                  width: 60,
                  child: OutlinedButton(
                    onPressed: () {
-                     showModalBottomSheet(
-                       context: context,
-                        builder: (context) {
-                          return Column(
-                            children: [
-                              buildSheet(context)
-
-                            ],
-                          );
-                        },
-                     ); 
+                    showBottomSheet(context); 
                    },
                    child: Center(
                      child: Icon(Icons.mail, color: Colors.black),
@@ -186,7 +176,9 @@ class _CreateEventState extends State<CreateEvent> {
                     height: 65,
                     width: 150,
                     child: OutlinedButton(
-                      onPressed: () {  },
+                      onPressed: () { 
+                        
+                       },
                       child: Center(
                         child: Text('Разделить сумму',
                             style: TextStyle(
@@ -208,13 +200,41 @@ class _CreateEventState extends State<CreateEvent> {
       ),
     );
   }
+  bool? checkbox1 = false;
   showBottomSheet(context){
     return showModalBottomSheet(
         context: context,
         builder: (builder){
-          return StatefulBuilder(builder: (context,setstate){
+          return StatefulBuilder(builder: (context,StateSetter setstate){
             return Container(
-              child: Column(),
+              child: Column(
+                children: [
+                
+                  ListView.builder(
+                   shrinkWrap: true,
+              itemCount: selectedContacts.length,
+              itemBuilder: (context, index){
+                Contact contact = selectedContacts[index];
+                final isSelected =
+                selectedContactsSMS.contains(contact);
+                return CheckboxListTile(
+                  value: selectedContactsSMS.contains(contact), 
+                  title:Text((contact.displayName ?? '').toString()), 
+                  onChanged: (bool? value){
+                    setstate(() {
+                      if(value ?? true){
+                        selectedContactsSMS.add(contact); 
+                      }
+                      else{
+                        selectedContactsSMS.remove(contact);
+                      }
+                    });
+                  }
+                  );
+              }
+               )
+                ],
+              ),
             );
             }
           );
@@ -243,6 +263,7 @@ class _CreateEventState extends State<CreateEvent> {
                     contact: contact,
                     isSelected: isSelected,
                     onSelectedContact: selectContact
+                    
                 );
               }
           ),
@@ -270,7 +291,9 @@ class ContactListTileWidget extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    
     return Card(
+      
         child: ListTile(
           onTap: () => onSelectedContact(contact),
           title: Text((contact.displayName ?? '').toString()),

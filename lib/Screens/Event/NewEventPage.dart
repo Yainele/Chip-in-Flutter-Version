@@ -167,6 +167,7 @@ class ContactListTileWidget extends StatelessWidget {
       : super(key: key);
 
   get avatar => contact.avatar;
+  get phone => contact.phones;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -176,7 +177,7 @@ class ContactListTileWidget extends StatelessWidget {
           trailing: isSelected
               ? Icon(Icons.check, color: Theme.of(context).primaryColor, size: 26)
               : null,
-          //subtitle: Text(contact.phones?.elementAt(0).value ?? ''),
+          //subtitle: Text(phone),
           leading: (contact.avatar != null && contact.avatar?.length != 0)
               ? CircleAvatar(
             backgroundImage: MemoryImage((avatar)),

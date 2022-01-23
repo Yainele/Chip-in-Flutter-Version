@@ -18,7 +18,7 @@ class ChipIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
 
-      home: Authentification(),
+      home: MyBottomNavigationBar(),
 
     );
   }
